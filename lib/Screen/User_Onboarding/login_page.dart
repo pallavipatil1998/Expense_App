@@ -1,5 +1,6 @@
 import 'package:expense_app/Utils/my_styles.dart';
 import 'package:expense_app/app_Widget/app_rounded_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Utils/image_constants.dart';
@@ -29,7 +30,85 @@ class _LoginPageState extends State<LoginPage> {
 
   }
 
-  Widget mainUI(double mWidth, bool isLandScape){
+Widget mainUI(double mWidth){
+    return  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: mWidth * 0.08,
+          child: Image.asset(
+            ImageConstants.appLogoIcon,
+            color: Colors.grey.shade100,
+            width: mWidth * 0.075,
+            height: mWidth * 0.075,
+          ),
+        ),
+        hSpacer(mHeight: 16),
+        SizedBox(
+          width: mWidth * 0.4,
+          child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+              child: Text(
+                'Welcome, Back!!',
+                style: mTextStyle34(mWeight: FontWeight.bold),
+              )),
+        ),
+        hSpacer(),
+        TextField(
+            decoration: myDecoration(
+                mPrefixIcon: Icons.email_outlined,
+                mLabel: "Email",
+                mHint: "Enter your Email..")),
+        hSpacer(),
+        TextField(
+            obscuringCharacter: "*",
+            obscureText: true,
+            decoration: myDecoration(
+                mPrefixIcon: Icons.password,
+                mLabel: "Password",
+                mHint: "Enter your Email..")),
+        hSpacer(mHeight: 16),
+        AppRoundedButton(onTap: () {}, title: "Login")
+      ],
+    );
+}
+
+
+  Widget portraitUI(double mWidth){
+    return mainUI(mWidth);
+  }
+
+  Widget landScapeUI(double  mWidth){
+    return Row(
+      children: [
+        Expanded(child:CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: mWidth * 0.08,
+          child: Image.asset(
+            ImageConstants.appLogoIcon,
+            color: Colors.grey.shade100,
+            width: mWidth * 0.075,
+            height: mWidth * 0.075,
+          ),
+        ), ),
+        Expanded(child:LayoutBuilder(
+          builder: (context,constraints) {
+            return mainUI(constraints.maxWidth);
+          }
+        ) ),
+      ],
+    );
+  }
+
+
+
+}
+
+
+
+/* Widget mainUI(double mWidth, bool isLandScape){
     return  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -77,18 +156,15 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
 
-  }
-
-  Widget portraitUI(double mWidth){
-    return mainUI(mWidth,false);
-  }
-
-  Widget landScapeUI(double  mWidth){
-    return Expanded(child:mainUI(mWidth,true) );
-  }
+  }*/
 
 
 
+/*
+Widget portraitUI(double mWidth){
+  return mainUI(mWidth,false);
 }
 
-
+Widget landScapeUI(double  mWidth){
+  return Expanded(child:mainUI(mWidth,true) );
+}*/
