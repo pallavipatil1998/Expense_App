@@ -2,6 +2,7 @@ import 'package:expense_app/Utils/my_styles.dart';
 import 'package:expense_app/app_Widget/app_rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../Utils/image_constants.dart';
 
@@ -18,19 +19,24 @@ class _LoginPageState extends State<LoginPage> {
     var mediaqueryData =MediaQuery.of(context);
     var mWidth=mediaqueryData.size.width;
     var mHeight=mediaqueryData.size.height;
+    print("MQweight:$mWidth, MQHeight: $mHeight");
     var mOrientation =mediaqueryData.orientation;
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: mOrientation == Orientation.portrait ? portraitUI(mWidth) : landScapeUI(mWidth)
+        child: mOrientation == Orientation.portrait ? portraitUI(mWidth,mHeight) : landScapeUI(mWidth,mHeight)
       )
 
     );
 
   }
 
-Widget mainUI(double mWidth){
+Widget mainUI(double mWidth,double mHeight){
+    return mHeight>334 ? mainSubUI(mWidth, mHeight) : SingleChildScrollView(child: mainSubUI(mWidth, mHeight)) ;
+}
+
+Widget mainSubUI(double mWidth,double mHeight){
     return  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -50,9 +56,16 @@ Widget mainUI(double mWidth){
           child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
-              child: Text(
-                'Welcome, Back!!',
-                style: mTextStyle34(mWeight: FontWeight.bold),
+              child: SizedBox(
+                width: mWidth * 0.4,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Welcome, Back!!',
+                    style: mTextStyle34(mWeight: FontWeight.bold),
+                  ),
+                ),
               )),
         ),
         hSpacer(),
@@ -76,14 +89,16 @@ Widget mainUI(double mWidth){
 }
 
 
-  Widget portraitUI(double mWidth){
-    return mainUI(mWidth);
+  Widget portraitUI(double mWidth,double mHeight){
+    return mainUI(mWidth,mHeight);
   }
 
-  Widget landScapeUI(double  mWidth){
+  Widget landScapeUI(double  mWidth,double mHeight){
     return Row(
       children: [
-        Expanded(child:CircleAvatar(
+        Expanded(
+          flex: 1,
+          child:CircleAvatar(
           backgroundColor: Colors.black,
           radius: mWidth * 0.08,
           child: Image.asset(
@@ -93,9 +108,14 @@ Widget mainUI(double mWidth){
             height: mWidth * 0.075,
           ),
         ), ),
-        Expanded(child:LayoutBuilder(
+        Expanded(
+          flex: 2,
+            child:LayoutBuilder(
           builder: (context,constraints) {
-            return mainUI(constraints.maxWidth);
+            var mWidth=constraints.maxWidth;
+            var mHeight=constraints.maxHeight;
+            print("LBweight:$mWidth, LBHeight: $mHeight");
+            return mainUI(constraints.maxWidth,mHeight);
           }
         ) ),
       ],

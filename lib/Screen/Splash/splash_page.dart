@@ -15,6 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var mediaqueryData =MediaQuery.of(context);
     var mWidth=mediaqueryData.size.width;
     var mHeight=mediaqueryData.size.height;
+    // print("MQweight:$mWidth, MQHeight: $mHeight");
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
      body: Center(
