@@ -1,6 +1,6 @@
-import 'package:expense_app/Screen/Utils/image_constants.dart';
-import 'package:expense_app/Screen/Utils/my_styles.dart';
 import 'package:flutter/material.dart';
+import '../../Utils/image_constants.dart';
+import '../../Utils/my_styles.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
