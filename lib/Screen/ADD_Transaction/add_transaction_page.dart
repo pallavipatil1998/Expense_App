@@ -117,7 +117,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               AppRoundedButton(onTap: () async{
                 context.read<ExpenseBloc>().add(AddExpenseEvent(
                     newExpense: ExpenseModel(
-                        u_id: await UserPreference().getUserId(),
+                        u_id: 0,
                         exp_title: titileController.text.toString(),
                         exp_desc: descController.text.toString(),
                         exp_amt: double.parse(amtController.text.toString()),

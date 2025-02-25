@@ -95,7 +95,7 @@ class AppDataBase{
     var db=await getDb();
     List<Map<String,dynamic>> data=await db.query(USER_TABLE,where: "$USER_COLUMN_EMAIL=? && $USER_COLUMN_PASS=?",whereArgs: [email,pass]);
     if(data.isNotEmpty){
-      UserPreference().setUserId(data[0][USER_COLUMN_ID]);
+      // UserPreference().setUserId(data[0][USER_COLUMN_ID]);
     }
     return data.isNotEmpty;
 
@@ -112,10 +112,10 @@ Future<bool> addExpense(ExpenseModel newExpense)async{
 }
 
 
-Future<List<ExpenseModel>> getAllExpensesOfUser()async{
+Future<List<ExpenseModel>> getAllExpensesOfUser(int uid)async{
     var db=await getDb();
-
-    int uid= UserPreference().getUserId();
+   int uid=0;
+    // int uid= UserPreference().getUserId();
 
    List<Map<String,dynamic>> data=await db.query(EXPENSE_TABLE,where:" $USER_COLUMN_ID=?", whereArgs: [uid]);
 

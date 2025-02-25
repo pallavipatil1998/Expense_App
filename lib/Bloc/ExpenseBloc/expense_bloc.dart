@@ -11,7 +11,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent,ExpenseState>{
       emit(ExpenseLoading());
       bool check=await db.addExpense(event.newExpense);
       if(check){
-        var expense= await db.getAllExpensesOfUser();
+        var expense= await db.getAllExpensesOfUser(0);
         emit(ExpenseLoaded(listExpense: expense));
       }else{
         emit(ExpenseError(errorMasg: "Expense Not Added"));
@@ -21,7 +21,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent,ExpenseState>{
 
     on<FetchAllExpense>((event, emit)async {
       emit(ExpenseLoading());
-      var expense=await db.getAllExpensesOfUser();
+      var expense=await db.getAllExpensesOfUser(0);
       emit(ExpenseLoaded(listExpense: expense));
     }
     ,);
