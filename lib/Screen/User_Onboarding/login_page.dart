@@ -19,8 +19,9 @@ class _LoginPageState extends State<LoginPage> {
     var mediaqueryData =MediaQuery.of(context);
     var mWidth=mediaqueryData.size.width;
     var mHeight=mediaqueryData.size.height;
-    print("MQweight:$mWidth, MQHeight: $mHeight");
+    print("MQwidth:$mWidth, MQHeight: $mHeight");
     var mOrientation =mediaqueryData.orientation;
+    print(mOrientation);
 
     return Scaffold(
       body: Padding(
@@ -56,16 +57,9 @@ Widget mainSubUI(double mWidth,double mHeight){
           child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
-              child: SizedBox(
-                width: mWidth * 0.4,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Welcome, Back!!',
-                    style: mTextStyle34(mWeight: FontWeight.bold),
-                  ),
-                ),
+              child: Text(
+                'Welcome, Back!!',
+                style: mTextStyle34(mWeight: FontWeight.bold),
               )),
         ),
         hSpacer(),
@@ -100,12 +94,12 @@ Widget mainSubUI(double mWidth,double mHeight){
           flex: 1,
           child:CircleAvatar(
           backgroundColor: Colors.black,
-          radius: mWidth * 0.08,
+          radius: mWidth * 0.01,
           child: Image.asset(
             ImageConstants.appLogoIcon,
             color: Colors.grey.shade100,
-            width: mWidth * 0.075,
-            height: mWidth * 0.075,
+            width: mHeight * 0.09,
+            height: mHeight * 0.09,
           ),
         ), ),
         Expanded(
@@ -114,7 +108,7 @@ Widget mainSubUI(double mWidth,double mHeight){
           builder: (context,constraints) {
             var mWidth=constraints.maxWidth;
             var mHeight=constraints.maxHeight;
-            print("LBweight:$mWidth, LBHeight: $mHeight");
+            print("LBwidth:$mWidth, LBHeight: $mHeight");
             return mainUI(constraints.maxWidth,mHeight);
           }
         ) ),

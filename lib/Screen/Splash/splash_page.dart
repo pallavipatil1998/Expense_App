@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var mediaqueryData =MediaQuery.of(context);
     var mWidth=mediaqueryData.size.width;
     var mHeight=mediaqueryData.size.height;
-    // print("MQweight:$mWidth, MQHeight: $mHeight");
+    print("MQweight:$mWidth, MQHeight: $mHeight");
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
      body: Center(
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
          children: [
          CircleAvatar(
            backgroundColor: Colors.black,
-           radius: mediaqueryData.size.width*0.05,
+           radius: mWidth*0.05,
            child: Image.asset(ImageConstants.appLogoIcon,width: mWidth*0.048,height:mWidth*0.048 ,color:Colors.grey.shade100 ,),
          ),
          Text("Expenser",style: mWidth>600 ? mTextStyle43(mWeight: FontWeight.bold): mTextStyle34(mWeight: FontWeight.bold))
