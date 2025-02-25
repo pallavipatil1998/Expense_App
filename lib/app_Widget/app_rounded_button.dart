@@ -7,18 +7,27 @@ class AppRoundedButton extends StatelessWidget {
   String title;
   Color bgColor;
   Color textColor;
+  Widget? mWidget;
 
-
-  AppRoundedButton({required this.onTap,required this.title,this.bgColor=ColorConstants.mattBlackColor,this.textColor=Colors.white});
+  AppRoundedButton(
+      {required this.onTap,
+      required this.title,
+      this.bgColor = ColorConstants.mattBlackColor,
+      this.textColor = Colors.white,
+        this.mWidget
+      });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: bgColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21))
-      ),
-        onPressed:onTap ,
-        child: Text(title,style: mTextStyle16(fontColor: textColor),));
+        style: ElevatedButton.styleFrom(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(21))),
+        onPressed: onTap,
+        child:mWidget ?? Text(
+          title,
+          style: mTextStyle16(fontColor: textColor),
+        ));
   }
 }
