@@ -1,9 +1,12 @@
+import 'package:expense_app/Provider/user_pref_provider.dart';
 import 'package:expense_app/Screen/Splash/splash_page.dart';
 import 'package:expense_app/Screen/User_Onboarding/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (context) => UserPrefProvider(),));
 }
 
 class MyApp extends StatelessWidget {
