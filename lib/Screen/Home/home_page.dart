@@ -37,9 +37,10 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (_,index){
                 var currData=state.listExpense[index];
                 return ListTile(
+                  leading: Text("${currData.exp_id}"),
                   title: Text(currData.exp_title),
                   subtitle: Text(currData.exp_desc),
-                  leading: Text(currData.exp_time)
+                  trailing: Text(currData.exp_time)
                 );
 
 
