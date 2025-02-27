@@ -12,9 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(BlocProvider(create: (context) => ExpenseBloc(db: AppDataBase.db),
-    child: MyApp(),
-  ));
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) =>ExpenseBloc(db: AppDataBase.db) ,),
+        BlocProvider(create: (context) => UserBloc(db: AppDataBase.db),)
+      ], 
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:HomePage()
+      home:SplashScreen()
     );
   }
 }

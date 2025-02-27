@@ -21,12 +21,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<FilteredExpenseModel> dateWiseExpenseList = [];
+  num maxAmt=0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<ExpenseBloc>().add(FetchAllExpense());
+    // context.read<ExpenseBloc>().add(FetchAllExpense());
   }
 
   @override
@@ -35,70 +36,78 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Home Page"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: BlocBuilder<ExpenseBloc, ExpenseState>(
-          builder: (_, state) {
-            if (state is ExpenseLoaded) {
-              filteredExpenseByDate(state.listExpense);
-              return ListView.builder(
-                itemCount: dateWiseExpenseList.length,
-                itemBuilder: (_, index) {
-                  var currData = dateWiseExpenseList[index];
+      body: BlocBuilder<ExpenseBloc, ExpenseState>(
+        builder: (_, state) {
+          if (state is ExpenseLoaded) {
+            filteredExpenseByDate(state.listExpense);
+            return ListView.builder(
+              itemCount: dateWiseExpenseList.length,
+              itemBuilder: (_, index) {
+                var currData = dateWiseExpenseList[index];
 
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(currData.dateName),
-                          Text("${currData.totalAmt}"),
-                        ],
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: currData.expenseList.length,
-                        itemBuilder: (ctx, childIndex) {
-                          var currExp = currData.expenseList[childIndex];
-                          var imgPath = AppConstants.categories.firstWhere(
-                              (element) =>
-                                  element['id'] == currExp.exp_cat_id)['img'];
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(currData.dateName),
+                        Text("${currData.totalAmt}"),
+                      ],
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: currData.expenseList.length,
+                      itemBuilder: (ctx, childIndex) {
+                        var currExp = currData.expenseList[childIndex];
+                        var imgPath;
+                        imgPath = AppConstants.categories.firstWhere(
+                            (element) =>
+                                element['id'] == currExp.exp_cat_id)['img'];
 
-                          return ListTile(
-                            leading: Image.asset(imgPath),
-                            title: Text(currExp.exp_title),
-                            subtitle: Text(currExp.exp_desc),
-                            trailing: Text("${currExp.exp_amt}"),
-                          );
-                        },
-                      )
-                    ],
-                  );
-                },
-              );
-            } else if (state is ExpenseLoading) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return Center(
-                child: Container(
-              child: Text(
-                "Data Not Added",
-                style: mTextStyle25(mWeight: FontWeight.bold),
-              ),
-            ));
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddTransactionPage(),
-              ));
+                        return ListTile(
+                          leading: Image.asset(imgPath),
+                          title: Text(currExp.exp_title),
+                          subtitle: Text(currExp.exp_desc),
+                          trailing: Text("${currExp.exp_amt}"),
+                        );
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          } else if (state is ExpenseLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return Center(
+              child: Container(
+            child: Text(
+              "Data Not Added",
+              style: mTextStyle25(mWeight: FontWeight.bold),
+            ),
+          ));
         },
-        child: Icon(Icons.add),
+      ),
+      floatingActionButton: Row(
+        children: [
+          FloatingActionButton(onPressed: (){
+            UserPreference().setUserId(0);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+          },
+            child: Icon(Icons.logout),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddTransactionPage(),
+                  ));
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
@@ -111,7 +120,7 @@ class _HomePageState extends State<HomePage> {
     for (ExpenseModel eachExpense in filtExList) {
       var eachDate = DateTime.parse(eachExpense.exp_time);
       var mDate = "${eachDate.year}"
-          "-${eachDate.month.toString().length < 2 ? "0${eachDate.month}" : eachDate.month}"
+          "-${eachDate.month.toString().length < 2 ? "-0${eachDate.month}" : eachDate.month}"
           "${eachDate.day.toString().length < 2 ? "-0${eachDate.day}" : eachDate.day}";
 
       if (!uniqueDateList.contains(mDate)) {
