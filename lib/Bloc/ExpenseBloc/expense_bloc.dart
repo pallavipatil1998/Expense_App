@@ -1,3 +1,4 @@
+import 'package:expense_app/user_preference/user_preference.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../DataBase/app_database.dart';
 import 'expense_event.dart';
@@ -11,7 +12,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent,ExpenseState>{
       emit(ExpenseLoading());
       bool check=await db.addExpense(event.newExpense);
       if(check){
-        var expense= await db.getAllExpensesOfUser(0);
+        var expense= await db.getAllExpensesOfUser();
         emit(ExpenseLoaded(listExpense: expense));
       }else{
         emit(ExpenseError(errorMasg: "Expense Not Added"));
@@ -21,7 +22,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent,ExpenseState>{
 
     on<FetchAllExpense>((event, emit)async {
       emit(ExpenseLoading());
-      var expense=await db.getAllExpensesOfUser(0);
+      var expense=await db.getAllExpensesOfUser();
       emit(ExpenseLoaded(listExpense: expense));
     }
     ,);
